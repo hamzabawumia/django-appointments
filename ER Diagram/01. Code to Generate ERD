@@ -1,0 +1,63 @@
+Table users {
+  id integer [primary key]
+  username varchar
+  email varchar
+  first_name varchar
+  last_name varchar
+  phone_number varchar
+  is_staff boolean
+  is_superuser boolean
+  password varchar
+  last_login datetime
+  date_joined datetime
+}
+
+Table staff_profiles {
+  id integer [primary key]
+  user_id integer [ref: > users.id]
+  bio text
+  photo varchar
+  working_hours text
+  days_off text
+}
+
+Table services {
+  id integer [primary key]
+  name varchar
+  description text
+  duration integer
+  price decimal
+  active boolean
+}
+
+Table appointments {
+  id integer [primary key]
+  client_id integer [ref: > users.id]
+  staff_id integer [ref: > staff_profiles.id]
+  service_id integer [ref: > services.id]
+  start_time datetime
+  end_time datetime
+  status varchar
+  notes text
+  created_at datetime
+  updated_at datetime
+}
+
+Table availability {
+  id integer [primary key]
+  staff_id integer [ref: > staff_profiles.id]
+  date date
+  start_time time
+  end_time time
+  is_available boolean
+}
+
+Table appointment_settings {
+  id integer [primary key]
+  slot_duration integer
+  lead_time integer
+  finish_time integer
+  buffer_time integer
+  allow_reschedule boolean
+  send_email_reminders boolean
+}
